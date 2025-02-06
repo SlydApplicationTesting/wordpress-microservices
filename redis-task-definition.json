@@ -1,0 +1,13 @@
+{
+  "family": "wordpress-redis",
+  "containerDefinitions": [
+    {
+      "name": "redis",
+      "image": "redis:alpine",
+      "essential": true,
+      "networkMode": "awsvpc",
+      "restartPolicy": "always"
+    }
+  ],
+  "networkMode": "awsvpc"
+}
