@@ -1,0 +1,36 @@
+{
+  "family": "wordpress-app",
+  "containerDefinitions": [
+    {
+      "name": "wordpress",
+      "image": "wordpress:php8.1-fpm",
+      "essential": true,
+      "environment": [
+        { "name": "WORDPRESS_DB_HOST", "value": "db:3306" },
+        { "name": "WORDPRESS_DB_USER", "value": "wordpress" },
+        { "name": "WORDPRESS_DB_PASSWORD", "value": "wordpress_password" },
+        { "name": "WORDPRESS_DB_NAME", "value": "wordpress" },
+        { "name": "WORDPRESS_REDIS_HOST", "value": "redis" }
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "wordpress_data",
+          "containerPath": "/var/www/html"
+        }
+      ],
+      "networkMode": "awsvpc",
+      "dependsOn": [
+        { "containerName": "db", "condition": "START" },
+        { "containerName": "redis", "condition": "START" }
+      ],
+      "restartPolicy": "always"
+    }
+  ],
+  "volumes": [
+    {
+      "name": "wordpress_data",
+      "host": {}
+    }
+  ],
+  "networkMode": "awsvpc"
+}
